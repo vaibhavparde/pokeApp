@@ -1,0 +1,49 @@
+<div class="container my-1">
+    <div class="row">
+        <div class="col-xl-10 offset-xl-1">
+            <div class="row">
+                <h1 class="mb-4">Pokedex</h1>
+                <div *ngFor="let pokemon of pokemons | paginate :{itemsPerPage: 12, currentPage: page, totalItems:rescount }; let i = index" class="col-md-4">
+                    <div class="card mb-3 bg-{{getType(pokemon)}}" [routerLink]="['/view', pokemon.name]">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-7 col-sm-8">
+                                    <h3 class="card-title">{{pokemon.name | titlecase}}</h3>
+                                    <span *ngFor="let type of pokemon.types" class="badge border rounded-pill me-1 bg-{{getType(pokemon)}}">
+                                        {{type.type.name | titlecase}}
+                                    </span>
+                                </div>
+                                <div class="col-5 col-sm-4">
+                                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{pokemon.id}}.png" class="img-fluid" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <pagination-template #p="paginationApi" (pageChange)="pageChanged($event)" *ngIf="rescount>12">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="pagination-previous page-item" [class.disabled]="p.isFirstPage()">
+                        <a class="page-link" (click)="p.previous()" href="javaScript:void(0)">
+                            Previous </a>
+                    </li>
+
+                    <li *ngFor="let page of p.pages" class="page-item" [class.current]="p.getCurrent() === page.value">
+                        <a (click)="p.setCurrent(page.value)" class="page-link" *ngIf="p.getCurrent() !== page.value" href="javaScript:void(0)">
+                            <span>{{ page.label }}</span>
+                        </a>
+                        <div *ngIf="p.getCurrent() === page.value" class="page-link active">
+                            <span>{{ page.label }}</span>
+                        </div>
+                    </li>
+
+                    <li class="pagination-next page-item" [class.disabled]="p.isLastPage()">
+                        <a (click)="p.next()" class="page-link" href="javaScript:void(0)"> Next </a>
+                    </li>
+                </ul>
+            </nav>
+        </pagination-template>
+    </div>
+</div>

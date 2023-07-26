@@ -1,0 +1,11 @@
+install node package manager
+-------------------------
+cmd : npm install
+
+run project
+----------------------------
+install angular cli
+
+cmd : npm install -g @angular/cli
+cmd : ng serve
+
